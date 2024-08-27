@@ -17,3 +17,6 @@ This is a manual chatbot site that uses PHP, JS, and MySQL
 
 > [!NOTE]
 > You should also modify the database and table names from the given code when coding at your code editor. So that only it works on or else it won't work. (After step 5)
+
+# About index.json
+This file contains the manual commands I created to help me understand how it works.
