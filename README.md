@@ -1,7 +1,8 @@
 # ChatBot 👨‍💻
 This is a manual chatbot site that uses PHP, JS, and MySQL
 
-![Picture](file:///C:/Users/ADMIN/Downloads/image.png)
+![Picture](https://cdn.discordapp.com/attachments/897405096500035585/1277961037790052352/image.png?ex=66cf1176&is=66cdbff6&hm=5957a503e4d0583426d974dd838c1ecca439fb952fa44d3aa262c6e7b4f8e1ac&
+)
 
 # Algorithms on MySQL setup
 ## Follow the below steps:- 
