@@ -13,7 +13,7 @@ This is a manual chatbot site that uses PHP, JS, and MySQL
 
 > Step 5: Take the code and add it to your code editor  
 
+> Steps 6: That's all
+
 > [!NOTE]
 > You should also modify the database and table names from the given code when coding at your code editor. So that only it works on or else it won't work.
-
-> Steps 6: That's all
