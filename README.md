@@ -1,6 +1,8 @@
 # ChatBot 👨‍💻
 This is a manual chatbot site that uses PHP, JS, and MySQL
 
+![Picture](https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F1gmghglaah1eiztze2wd.png)
+
 # Algorithms on MySQL setup
 ## Follow the below steps:- 
 > Step 1: Install PHP and Xampp
