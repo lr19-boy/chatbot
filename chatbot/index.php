@@ -40,7 +40,6 @@
     #container {
       height: 90%;
       width: 90%;
-      max-width: 1200px;
       background: #F3F4F6;
       border-radius: 6px;
       display: flex;
@@ -117,31 +116,45 @@
       background: transparent;
       box-shadow: 2px 2px 8px black;
       border-radius: 5px;
+	  width: 100%;
     }
 
     #userInput {
       flex: 1;
       height: 20px;
-      background-color: white;
+	  background-color: white;
       border-radius: 6px;
       padding: 1rem;
       font-size: 1rem;
       border: none;
-      outline: none;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
       margin-right: 10px;
     }
-
-    button {
-      padding: 10px 20px;
+	
+	.reset {
+	  padding: 10px 30px;
+	  display: flex;
+	  right: 5px
       border: none;
       border-radius: 6px;
       font-size: 1rem;
       cursor: pointer;
       color: white;
-      background: #3B82F6;
+      background: black;
       box-shadow: 2px 2px 8px black;
-    }
+	}
+	
+	#send {
+	    padding: 10px 30px;
+	    display: flex;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        color: white;
+        background: #3B82F6;
+        box-shadow: 2px 2px 8px black;
+	}
 
     footer {
 		position: fixed;
@@ -174,34 +187,43 @@
         <button type="submit" id="send">Send</button>
         <button class="reset" id="reset">Reset</button>
       </div>
-    </div>
+    </div>	
   </div>
 
   <footer> LR19Boy - &copy; Copyrights @ 2024 &copy; </footer>
 
   <script type="text/javascript">
     document.querySelector("#reset").addEventListener("click", () => {
-      document.querySelector("#body").innerHTML = "";
-    });
+  document.querySelector("#body").innerHTML = "";
+});
 
-    document.querySelector("#send").addEventListener("click", async () => {
-      let xhr = new XMLHttpRequest();
-      var userMessage = document.querySelector("#userInput").value;
+document.querySelector("#send").addEventListener("click", sendMessage);
 
-      let userHtml = '<div class="userSection"><div class="messages user-message">' + userMessage + '</div><div class="seperator"></div></div>';
-      document.querySelector('#body').innerHTML += userHtml;
+document.querySelector("#userInput").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
 
-      xhr.open("POST", "query.php");
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.send(`messageValue=${userMessage}`);
+function sendMessage() {
+  let xhr = new XMLHttpRequest();
+  var userMessage = document.querySelector("#userInput").value;
 
-      xhr.onload = function () {
-        let botHtml = '<div class="messages bot-reply">' + this.responseText + '</div><div class="seperator"></div>';
-        document.querySelector('#body').innerHTML += botHtml;
-        document.querySelector("#userInput").value = "";
-        document.querySelector("#body").scrollTop = document.querySelector("#body").scrollHeight;
-      }
-    });
+  let userHtml = '<div class="userSection"><div class="messages user-message">' + userMessage + '</div><div class="seperator"></div></div>';
+  document.querySelector('#body').innerHTML += userHtml;
+
+  xhr.open("POST", "query.php");
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send(`messageValue=${userMessage}`);
+
+  xhr.onload = function () {
+    let botHtml = '<div class="messages bot-reply">' + this.responseText + '</div><div class="seperator"></div>';
+    document.querySelector('#body').innerHTML += botHtml;
+    document.querySelector("#userInput").value = "";
+    document.querySelector("#body").scrollTop = document.querySelector("#body").scrollHeight;
+  }
+}
+
   </script>
 </body>
 </html>
