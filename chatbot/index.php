@@ -213,11 +213,22 @@
       var hours = date.getHours();
       var minutes = date.getMinutes();
       var seconds = date.getSeconds();
+      var period = "AM";
+
+      // Convert to 12-hour format
+      if (hours >= 12) {
+        period = "PM";
+        if (hours > 12) {
+          hours -= 12;
+        }
+      } else if (hours === 0) {
+        hours = 12;
+      }
 
       // Format the time to always show two digits
       minutes = minutes < 10 ? '0' + minutes : minutes;
       seconds = seconds < 10 ? '0' + seconds : seconds;
-      var currentTime = hours + ":" + minutes + ":" + seconds;
+      var currentTime = hours + ":" + minutes + ":" + seconds + " " + period;
 
       // Display the user message with time
       let userHtml = '<div class="userSection"><div class="messages user-message"><strong>' + userName + '- </strong> ' + userMessage + '<br><small>' + currentTime + '</small></div><div class="seperator"></div></div>';
@@ -231,10 +242,22 @@
         var botHours = botReplyTime.getHours();
         var botMinutes = botReplyTime.getMinutes();
         var botSeconds = botReplyTime.getSeconds();
+        var botPeriod = "AM";
 
+        // Convert to 12-hour format
+        if (botHours >= 12) {
+          botPeriod = "PM";
+          if (botHours > 12) {
+            botHours -= 12;
+          }
+        } else if (botHours === 0) {
+          botHours = 12;
+        }
+
+        // Format the time to always show two digits
         botMinutes = botMinutes < 10 ? '0' + botMinutes : botMinutes;
         botSeconds = botSeconds < 10 ? '0' + botSeconds : botSeconds;
-        var botTime = botHours + ":" + botMinutes + ":" + botSeconds;
+        var botTime = botHours + ":" + botMinutes + ":" + botSeconds + " " + botPeriod;
 
         let botHtml = '<div class="messages bot-reply">' + this.responseText + '<br><small>' + botTime + '</small></div><div class="seperator"></div>';
         document.querySelector('#body').innerHTML += botHtml;
@@ -243,5 +266,6 @@
       }
     }
   </script>
+
 </body>
 </html>
