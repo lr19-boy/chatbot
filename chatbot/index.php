@@ -258,8 +258,10 @@
         botMinutes = botMinutes < 10 ? '0' + botMinutes : botMinutes;
         botSeconds = botSeconds < 10 ? '0' + botSeconds : botSeconds;
         var botTime = botHours + ":" + botMinutes + ":" + botSeconds + " " + botPeriod;
+		
+		let msg = 'Bot';
 
-        let botHtml = '<div class="messages bot-reply">' + this.responseText + '<br><small>' + botTime + '</small></div><div class="seperator"></div>';
+        let botHtml = '<div class="messages bot-reply">' + msg + '- ' +this.responseText + '<br><small>' + botTime + '</small></div><div class="seperator"></div>';
         document.querySelector('#body').innerHTML += botHtml;
         document.querySelector("#userInput").value = "";
         document.querySelector("#body").scrollTop = document.querySelector("#body").scrollHeight;
