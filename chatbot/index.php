@@ -191,11 +191,14 @@
   <footer> LR19Boy - &copy; Copyrights @ 2024 &copy; </footer>
 
   <script type="text/javascript">
-    let userName = prompt("Please enter your name : ");
+    let userName;
+	while (!userName) {
+		userName = prompt("Please enter your name: ");
+	}
 
-    document.querySelector("#reset").addEventListener("click", () => {
-      document.querySelector("#body").innerHTML = "";
-    });
+document.querySelector("#reset").addEventListener("click", () => {
+  document.querySelector("#body").innerHTML = "";
+});
 
     document.querySelector("#send").addEventListener("click", sendMessage);
     document.querySelector("#userInput").addEventListener("keypress", function (e) {
