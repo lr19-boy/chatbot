@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="server.js" type="module"></script>
   <title>Chatbot - LR19Boy</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
@@ -25,8 +27,8 @@
     }
 
     #bot {
-      margin: 13px auto;
-      height: 720px;
+      margin: 0px auto;
+      height: 730px;
       width: 95%;
       background: white;
       display: flex;
@@ -47,6 +49,9 @@
     }
 
     #header {
+      display: flex;
+	  justify-content: center;
+	  align-items: center;
       flex-shrink: 0;
       width: 100%;
       height: 10%;
@@ -54,7 +59,6 @@
       color: white;
       text-align: center;
       font-size: 2rem;
-      padding-top: 12px;
       box-shadow: 2px 2px 8px black;
       border-radius: 6px 6px 0 0;
     }
@@ -64,7 +68,7 @@
       width: 100%;
       background-color: coral;
       box-shadow: 2px 2px 8px black;
-      border-radius: 0 0 7px 7px;
+      border-radius: 0 0 0 0;
       overflow-y: auto;
       padding: 10px;
     }
@@ -111,7 +115,7 @@
       justify-content: space-between;
       height: 8%;
       padding: 1rem;
-      background: transparent;
+      background: #D3D3D3;
       box-shadow: 2px 2px 8px black;
       border-radius: 5px;
       width: 100%;
@@ -126,20 +130,21 @@
       font-size: 1rem;
       border: none;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-      margin-right: 10px;
+      width: 50%;
     }
 
     .reset {
       padding: 10px 30px;
       display: flex;
-      right: 5px;
       border: none;
       border-radius: 6px;
       font-size: 1rem;
       cursor: pointer;
+      margin-left: 7px;
       color: white;
       background: red;
       box-shadow: 2px 2px 8px black;
+      justify-content: space-between;
     }
 
     #send {
@@ -148,10 +153,12 @@
       border: none;
       border-radius: 6px;
       font-size: 1rem;
+      margin-left: 7px;
       cursor: pointer;
       color: white;
       background: #3B82F6;
       box-shadow: 2px 2px 8px black;
+      justify-content: space-between;
     }
 
     footer {
@@ -165,24 +172,93 @@
       color: white;
       box-shadow: 0 -2px 8px black;
     }
+    
+    #upload {
+      padding: 10px 30px;
+      display: flex;
+      border: none;
+      margin-left: 7px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: white;
+      background: black;
+      box-shadow: 2px 2px 8px black;
+    }
+    
+    #fileInput {
+      padding: 10px 20px;
+      margin-left: 7px;
+      display: flex;
+      border: none;
+      justify-content: space-between;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: white;
+      background: black;
+      box-shadow: 2px 2px 8px black;
+    }
+	
+	.status-dot {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background: #34ff4a;
+    border-radius: 50%;
+	margin-top: 15px;
+	}
+	
+	.status-page-link {
+		padding: 10px 10px;
+		font-size: 16px;
+		border-bottom: 1px solid #efeff4;
+		border-top: 1px solid #efeff4;
+		border: 0;
+		box-shadow: none;
+		outline: 0;
+		display: block;
+		height: 100%;
+	}
+	
+	.status-dot1 {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background: red;
+    border-radius: 50%;
+	margin-top: 15px;
+	}
+	
+	.status-page-link1 {
+		padding: 10px 10px;
+		font-size: 16px;
+		border-bottom: 1px solid red;
+		border-top: 1px solid red;
+		border: 0;
+		box-shadow: none;
+		outline: 0;
+		display: block;
+		height: 100%;
+	}
+
   </style>
 </head>
-<body>
+<body id="chatbot">
   <div id="bot">
     <div id="container">
-      <div id="header">
-        Online Chatbot App
-      </div>
+      <div id="header" id="chatbotTitle"></div>
 
       <div id="body">
-        <!-- This section will be dynamically inserted from JavaScript -->
         <div class="userSection"></div>
         <div class="botSection"></div>
       </div>
 
       <div id="inputArea">
         <input type="text" name="messages" id="userInput" placeholder="Please enter your message here" required>
-        <button type="submit" id="send">Send</button>
+        <input type="file" id="fileInput" name="image" required>
+        <button id="upload">Upload</button>
+        <button type="submit" id="send" disabled>Send</button>
         <button class="reset" id="reset">Clear All</button>
       </div>
     </div>
@@ -192,24 +268,52 @@
 
   <script type="text/javascript">
     let userName;
-	while (!userName) {
-		userName = prompt("Please enter your name: ");
+	while (!userName || userName.includes(" ")) {
+		userName = prompt("Please enter your name (no spaces allowed): ");
 	}
 
-document.querySelector("#reset").addEventListener("click", () => {
-  document.querySelector("#body").innerHTML = "";
-});
+    // Set the title dynamically
+	if(userName)
+	{
+		document.querySelector("#header").innerHTML = `Online Chatbot App - ${userName} <div class="status-page-link"><div class="status-dot">`;
+	}
+	else {
+		document.querySelector("#header").innerHTML = `Online Chatbot App -  <div class="status-page-link1"><div class="status-dot1">`;
+	}
+	
+
+    // Disable send button initially
+    var sendButton = document.querySelector("#send");
+    var userInput = document.querySelector("#userInput");
+	
+
+    userInput.addEventListener("input", function () {
+      if (userInput.value.trim() !== "") {
+        sendButton.disabled = false;
+      } else {
+        sendButton.disabled = true;
+      }
+    });
+
+    document.querySelector("#reset").addEventListener("click", () => {
+      document.querySelector("#body").innerHTML = "";
+    });
 
     document.querySelector("#send").addEventListener("click", sendMessage);
-    document.querySelector("#userInput").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter" && userInput.value.trim() !== "") {
         sendMessage();
       }
     });
 
     function sendMessage() {
+      var userMessage = userInput.value.trim();
+
+      if (userMessage === "") {
+        return;
+      }
+
       let xhr = new XMLHttpRequest();
-      var userMessage = document.querySelector("#userInput").value;
 
       // Get the current date and time
       var date = new Date();
@@ -261,15 +365,51 @@ document.querySelector("#reset").addEventListener("click", () => {
         botMinutes = botMinutes < 10 ? '0' + botMinutes : botMinutes;
         botSeconds = botSeconds < 10 ? '0' + botSeconds : botSeconds;
         var botTime = botHours + ":" + botMinutes + ":" + botSeconds + " " + botPeriod;
-		
-		let msg = 'Bot';
 
-        let botHtml = '<div class="messages bot-reply">' + msg + '- ' +this.responseText + '<br><small>' + botTime + '</small></div><div class="seperator"></div>';
+        let msg = 'Bot';
+
+        let botHtml = '<div class="messages bot-reply">' + msg + '- ' + this.responseText + '<br><small>' + botTime + '</small></div><div class="seperator"></div>';
         document.querySelector('#body').innerHTML += botHtml;
-        document.querySelector("#userInput").value = "";
+        userInput.value = "";
         document.querySelector("#body").scrollTop = document.querySelector("#body").scrollHeight;
+
+        // Disable send button again
+        sendButton.disabled = true;
       }
     }
+
+    document.querySelector("#upload").addEventListener("click", () => {
+      const fileInput = document.querySelector("#fileInput");
+
+      if (fileInput.files.length === 0) {
+        alert("Please select at least one image file.");
+        return;
+      }
+
+      const botSection = document.querySelector(".botSection");
+      botSection.innerHTML = "";
+	  
+
+      const files = Array.from(fileInput.files);
+
+      files.forEach((file, index) => {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const imgElement = document.createElement("img");
+          imgElement.src = e.target.result;
+          imgElement.style.maxWidth = "20%";
+          imgElement.style.maxHeight = "20%";
+          imgElement.style.border = "5px solid #3B82F6";
+
+          botSection.append(imgElement);
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      console.log(fileInput.files); // Optional: Log the files array for debugging
+    });
   </script>
 
 </body>
