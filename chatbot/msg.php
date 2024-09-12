@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "onlinebot";  // Ensure this matches your database name
+$dbname = "";  // Ensure this matches your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
